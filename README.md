@@ -1,6 +1,6 @@
 # 🧿 Noder.js – Neder Shel Ach Yakar
 
-<div align="center">
+<div>
   <img src="https://raw.githubusercontent.com/alonzo245/noder.js/refs/heads/main/assets/noder-logo.png" alt="Noder.js Logo" width="200">
 </div>
 
