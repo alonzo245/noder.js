@@ -1,6 +1,6 @@
 {
   "name": "@alonzo245/noder.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Promise wrapper with Hafla energy",
   "main": "src/index.js",
   "scripts": {
