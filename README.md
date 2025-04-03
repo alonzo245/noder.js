@@ -1,5 +1,9 @@
 # 🧿 Noder.js – Neder Shel Ach Yakar
 
+<div align="center">
+  <img src="assets/logo.png" alt="Noder.js Logo" width="200">
+</div>
+
 > _"Because regular Promises are for nerds. This one's for brothers."_
 
 Welcome to **Noder.js**, the only JavaScript Promise wrapper that brings you:
