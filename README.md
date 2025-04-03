@@ -1,7 +1,7 @@
 # 🧿 Noder.js – Neder Shel Ach Yakar
 
 <div align="center">
-  <img src="./assets/logo.png" alt="Noder.js Logo" width="200">
+  <img src="https://github.com/alonzo245/noder.js/blob/main/assets/noder-logo.png" alt="Noder.js Logo" width="200">
 </div>
 
 > _"Because regular Promises are for nerds. This one's for brothers."_
