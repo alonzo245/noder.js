@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Noder.js</title>
+    <style>
+      body {
+        font-family: monospace;
+        background: #111;
+        color: #0f0;
+        padding: 2rem;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Noder.js – Dugma LeNeder Shel Ach Yakar</h1>
+    <div id="output"></div>
+
+    <script>
+      class Noder {
+        constructor(BaYakarLi) {
+          this.neder = new Promise(BaYakarLi);
+        }
+
+        nishba(kshenitzliach, kshenichshal) {
+          return new Noder((tenGazVeSayem, eizeSalat) => {
+            this.neder.then(
+              (tosha) => {
+                try {
+                  const pitaron = kshenitzliach ? kshenitzliach(tosha) : tosha;
+                  tenGazVeSayem(pitaron);
+                } catch (taut) {
+                  eizeSalat(taut);
+                }
+              },
+              (taut) => {
+                try {
+                  const mivtza = kshenichshal ? kshenichshal(taut) : taut;
+                  eizeSalat(mivtza);
+                } catch (smash) {
+                  eizeSalat(smash);
+                }
+              }
+            );
+          });
+        }
+
+        achSheli(kshenichshal) {
+          return this.nishba(null, kshenichshal);
+        }
+
+        azovNeshama(baSof) {
+          return new Noder((tenGazVeSayem, eizeSalat) => {
+            this.neder.finally(() => {
+              try {
+                baSof();
+                tenGazVeSayem();
+              } catch (taut) {
+                eizeSalat(taut);
+              }
+            });
+          });
+        }
+
+        static meKabel(baKesef) {
+          return new Noder((tenGazVeSayem) => tenGazVeSayem(baKesef));
+        }
+
+        static loBaLi(error) {
+          return new Noder((_, eizeSalat) => eizeSalat(error));
+        }
+
+        static kulamMitmasrim(promisot) {
+          return new Noder((tenGazVeSayem, eizeSalat) => {
+            Promise.all(promisot.map((p) => (p instanceof Noder ? p.neder : p)))
+              .then(tenGazVeSayem)
+              .catch(eizeSalat);
+          });
+        }
+
+        static miYakdim(promisot) {
+          return new Noder((tenGazVeSayem, eizeSalat) => {
+            Promise.race(
+              promisot.map((p) => (p instanceof Noder ? p.neder : p))
+            )
+              .then(tenGazVeSayem)
+              .catch(eizeSalat);
+          });
+        }
+      }
+
+      window.Noder = Noder;
+
+      const out = document.getElementById("output");
+
+      new Noder((tenGazVeSayem, eizeSalat) => {
+        setTimeout(() => {
+          const chance = Math.random();
+          if (chance > 0.5) {
+            tenGazVeSayem("✔️ shuki amar slicha – nechshev shalom bayit");
+          } else {
+            eizeSalat("❌ roni tafas kriza");
+          }
+        }, 1500);
+      })
+        .nishba((result) => {
+          out.innerHTML += `✅ <b>noder:</b> ${result}<br>`;
+        })
+        .achSheli((err) => {
+          out.innerHTML += `🚨 <b>noder:</b> ${err}<br>`;
+        })
+        .azovNeshama(() => {
+          out.innerHTML += `🔚 azov oti, ani noder sh osim sholem leolam<br>`;
+        });
+    </script>
+  </body>
+</html>
